@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 	if ( argc == 1 )
 		do_more(stdin);
 	else
+	{
 		while(--argc)
 		if((fp = fopen(*++argv, "r")) != NULL)
 		{
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
 		{
 			exit(1);
 		}
+	}
 	return 0;
 }
 
