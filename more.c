@@ -4,7 +4,7 @@
 #define LINELEN 512
 
 void do_more(FILE *fp);
-int see_more(FILE *fp);
+int see_more(FILE *fp_tty);
 
 int main(int argc, char *argv[])
 {
@@ -35,6 +35,7 @@ void do_more(FILE *fp)
 	int num_of_lines = 0;
 	int reply;
 	FILE *fp_tty;
+	if(!(fp_tty = fopen("/dev/tty", "r"))) exit(1);
 	while(fgets(line, LINELEN, fp))		// more input
 	{
 		if(num_of_lines == PAGELEN)		// full screen?
@@ -49,14 +50,19 @@ void do_more(FILE *fp)
 	}
 }
 
-int see_more(FILE *fp)
+int see_more(FILE *fp_tty)
+/*
+ * Print message, wait for response, return # of lines to advance
+ * q means no, space means yes, CR means one line.
+ */
 {
 	int c;
 	printf("\033[7m more? \033[m");		// reverse on a vt100
-	while((c = getchar()) != EOF)		// get response
+	while((c = getc(fp_tty)) != EOF)		// get response
 	{
 		if(c == 'q')	return 0;		// q         -> N
 		if(c == ' ')	return PAGELEN;	// space     => next page
 		if(c == '\n')	return 1;		// Enter key => 1 line
 	}
+	return 0;
 }
