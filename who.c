@@ -38,7 +38,7 @@ int main()
 void show_info(struct utmp *pcurrent_record)
 {
 	time_t timet=pcurrent_record->ut_tv.tv_sec;
-	if(pcurrent_record->ut_type != USER_PROCESS) return;
+//	if(pcurrent_record->ut_type != USER_PROCESS) return;
 	printf("%-8.8s ", pcurrent_record->ut_user);		// the logname
 	printf("%-8.8s ", pcurrent_record->ut_line);		// device name of tty - "/dev/"
 	printf("%12.12s ", ctime(&timet)+4);				// login time
