@@ -18,8 +18,11 @@ int main(void)
 	if(set_ticker(500) == -1)
 		perror("set_ticker");
 	else
+	{
+		printf("Let's go!\n");
 		while(1)
 			pause();
+	}
 	return 0;
 }
 
